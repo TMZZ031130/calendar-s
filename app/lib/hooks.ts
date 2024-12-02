@@ -7,6 +7,5 @@ export const requireUser = async () => {
   if (!session?.user) {
     return redirect("/");
   }
-
   return session;
 };
