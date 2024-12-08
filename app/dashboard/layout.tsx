@@ -32,15 +32,22 @@ async function getData(userId: string) {
   });
 
   if (!data?.userName) {
-    return redirect("/ondashbing");
+    return redirect("/onboarding");
   }
   if (!data.grantId) {
     return redirect("/onboarding/grant-id");
   }
+  return data;
 }
 
 const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await requireUser();
+
+  if (!session?.user) {
+    return redirect("/");
+  }
+
+  const data = await getData(session.user.id as string);
   return (
     <>
       <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
